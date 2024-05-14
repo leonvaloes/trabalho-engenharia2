@@ -1,0 +1,31 @@
+.footer-area{
+    background-color: #4a4758;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+    height: 400px;
+}
+
+.footer-interno{
+    width: 75%;
+    height: 200px;
+}
+
+.footer-interno img{
+    width: 200px;
+    height: 70px;
+}
+
+hr {
+    margin-top: 100px;
+    border: none;
+    height: 1px;
+    background-color: #ffffff1e;
+}
+
+
+.footer-assinatura{
+    margin-top: 20px;
+    color: white;
+}
