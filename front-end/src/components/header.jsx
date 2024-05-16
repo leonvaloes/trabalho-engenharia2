@@ -30,34 +30,30 @@ export default function Header() {
         }
     }
 
-
     return (
         <header>
             <div className="header-container ">
                 <a href="/"><img className="headerLogo" src={headerLogo} alt="logo do Carim" /></a>
                 <div className="header-itens d-flex justify-content-around">
                     <div className="button-apoiar"><strong>Quero apoiar</strong> </div>
-                    <Link to="/">Transparência</Link>
+                    <Link to="./parametrizacao">Param</Link>
                     <Link to="/">Doação</Link>
                     <Link to="./login">Login</Link>
                 </div>
                 <img className="logoMenu" onClick={alterarEstadoMenu} src={logoMenu} alt="logo do Menu" />
             </div>
 
-            
-            
             <div className="header-container-menu ">
                 <nav className={menuAberto ? 'menu-aberto' : 'menu-fechado'}>
                     <ul className="header-lista">
                         <li><a href="/">Home</a></li>
-                        <li><a href="#">Transparência</a></li>
+                        <li><a href="./parametrizacao">Param</a></li>
                         <li><a href="#">Doação</a></li>
                         <li><Link to="./login">Login</Link></li>
                         <p>© 2024 <a href="#">Carim</a></p>
                     </ul>
                 </nav>
             </div>
-
             <div className={menuAberto ? 'fundo-escuro-open' : 'fundo-escuro-close'}></div>
         </header>
     );

@@ -3,6 +3,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
 import Home from "./Home";
 import Login from './login';
+import Parametrizacao from './parametrizacao';
 
 
 function routes(){
@@ -11,6 +12,7 @@ function routes(){
             <Routes>
                 <Route element = { <Home/> }  path="/" exact />
                 <Route element = { <Login/> }  path="/login" />
+                <Route element = { <Parametrizacao/> }  path="/parametrizacao" />
             </Routes> 
         </Router>
     )
