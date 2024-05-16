@@ -57,8 +57,8 @@ export default function Parametrizacao() {
             alert("Erro ao enviar o formulário. Por favor, tente novamente mais tarde.");
         }
     };
-    
-    
+
+
 
     return (
         <>
@@ -69,21 +69,23 @@ export default function Parametrizacao() {
                         <p>Dados da empresa</p>
                         <div className="campos">
                             <div className="form_dados row">
-                                <div className="form_dados row">
-                                    <input required type="text" className="form_input col" name="parametrizacaoNomeFantasia" value={formData.parametrizacaoNomeFantasia} onChange={handleChange} placeholder="Nome fantasia" />
-                                    <input required type="text" className="form_input col" name="parametrizacaoRazaoSocial" value={formData.parametrizacaoRazaoSocial} onChange={handleChange} placeholder="Razão social" />
-                                    <input required type="text" className="form_input col" name="parametrizacaoTelefone" value={formData.parametrizacaoTelefone} onChange={handleChange} placeholder="Telefone" />
-                                    <input required type="text" className="form_input col" name="parametrizacaoemail" value={formData.parametrizacaoemail} onChange={handleChange} placeholder="Email" />
-                                    <input required type="text" className="form_input col" name="parametrizacaoSite" value={formData.parametrizacaoSite} onChange={handleChange} placeholder="Site" />
-                                </div>
-                                <div className="form_dados row">
-                                    <input required type="text" className="form_input col" name="parametrizacaoLogradouro" value={formData.parametrizacaoLogradouro} onChange={handleChange} placeholder="Rua" />
-                                    <input required type="text" className="form_input col" name="parametrizacaoBairro" value={formData.parametrizacaoBairro} onChange={handleChange} placeholder="Bairro" />
-                                </div>
-                                <div className="form_dados row">
-                                    <input required type="text" className="form_input col" name="parametrizacaoCEP" value={formData.parametrizacaoCEP} onChange={handleChange} placeholder="CEP" />
-                                    <input required type="text" className="form_input col" name="parametrizacaoNumero" value={formData.parametrizacaoNumero} onChange={handleChange} placeholder="Número" />
-                                </div>
+                                <section className="form_bloco">
+                                    <div className="form_dados col">
+                                        <input required type="text" className="form_input col" name="parametrizacaoNomeFantasia" value={formData.parametrizacaoNomeFantasia} onChange={handleChange} placeholder="Nome fantasia" />
+                                        <input required type="text" className="form_input col" name="parametrizacaoRazaoSocial" value={formData.parametrizacaoRazaoSocial} onChange={handleChange} placeholder="Razão social" />
+                                        <input required type="text" className="form_input col" name="parametrizacaoTelefone" value={formData.parametrizacaoTelefone} onChange={handleChange} placeholder="Telefone" />
+                                        <input required type="text" className="form_input col" name="parametrizacaoemail" value={formData.parametrizacaoemail} onChange={handleChange} placeholder="Email" />
+                                        <input required type="text" className="form_input col" name="parametrizacaoSite" value={formData.parametrizacaoSite} onChange={handleChange} placeholder="Site" />
+                                    </div>
+                                
+                                    <div className="form_dados col">
+                                        <input required type="text" className="form_input col" name="parametrizacaoLogradouro" value={formData.parametrizacaoLogradouro} onChange={handleChange} placeholder="Rua" />
+                                        <input required type="text" className="form_input col" name="parametrizacaoBairro" value={formData.parametrizacaoBairro} onChange={handleChange} placeholder="Bairro" />
+                                        <input required type="text" className="form_input col" name="parametrizacaoCEP" value={formData.parametrizacaoCEP} onChange={handleChange} placeholder="CEP" />
+                                        <input required type="text" className="form_input col" name="parametrizacaoNumero" value={formData.parametrizacaoNumero} onChange={handleChange} placeholder="Número" />
+                                    </div>
+                                </section>
+                                
                                 <input required type="text" className="form_input col" name="parametrizacaoLogoTipoGrande" value={formData.parametrizacaoLogoTipoGrande} onChange={handleChange} placeholder="Caminho da imagem Grande" />
                                 <input required type="text" className="form_input col" name="parametrizacaoLogoTipoPequena" value={formData.parametrizacaoLogoTipoPequena} onChange={handleChange} placeholder="Caminho da imagem Pequena" />
                                 <input type="submit" />
