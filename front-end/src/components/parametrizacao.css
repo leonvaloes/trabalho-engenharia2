@@ -1,6 +1,5 @@
-*{
+* {
     font-family: 'Inter';
-    
 }
 
 .form_Par {
@@ -11,9 +10,7 @@
     flex-direction: column;
 }
 
-
-
-.campos{
+.campos {
     display: flex;
     margin-top: 30px;
     justify-content: center;
@@ -21,7 +18,7 @@
     flex-direction: column;
 }
 
-.campos p{
+.campos p {
     margin-top: 30px;
     margin-bottom: 40px;
     font-size: 20px;
@@ -29,34 +26,38 @@
     border-bottom: 1px solid rgba(0, 0, 0, 0.415);
 }
 
-
-.form_Par p{
+.form_Par p {
     margin-top: 30px;
     font-size: 20px;
     color: rgba(0, 0, 0, 0.674);
     border-bottom: 1px solid rgba(0, 0, 0, 0.415);
 }
 
-.page-container{
+.page-container {
     margin-left: 5rem;
     margin-right: 5rem;
 }
 
-.form_bloco{
-    display:flex;
+.form_bloco {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
-
 
 @media (max-width: 800px) {
     .form_dados {
-        flex-direction:column ;
+        flex-direction: column;
     }
-    .form_bloco{
+
+    .form_bloco {
         display: block;
     }
 }
 
-
+.form_group {
+    position: relative;
+    margin-bottom: 20px;
+}
 
 .form_input {
     font-size: 16px;
@@ -64,27 +65,35 @@
     border: none;
     border-bottom: 1px solid #ccc;
     margin-right: 20px;
+    width: 100%;
 }
-.form_input:focus{
+
+.form_input:focus {
     outline: none;
+    border-bottom: 2px solid #000;
 }
-.form_input::placeholder {
-    color: #999; 
+
+.form_label {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: #999;
+    font-size: 16px;
     font-style: italic;
+    pointer-events: none;
+    transition: all 0.2s ease;
 }
-.form_input:focus::placeholder {
+
+.form_input:focus + .form_label,
+.form_input:not(:placeholder-shown) + .form_label {
+    top: -20px;
+    left: 10px;
+    font-size: 12px;
     color: #555;
     font-style: normal;
-    transform: translateY(-17px);
-    font-size: 12px;
 }
 
-
-
-
-
-
-.div_img{
+.div_img {
     margin-top: 20px;
 }
 
@@ -112,9 +121,5 @@
 }
 
 .input_img + label:hover {
-
     background-color: #33333323;
 }
-
-
-

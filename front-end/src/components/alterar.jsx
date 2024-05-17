@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import './parametrizacao.css';
+import './alterar.css';
 import Header from './header';
 import Footer from './footer';
 
-export default function Parametrizacao() {
+export default function Alterar() {
     const [formData, setFormData] = useState({
+        id: 1,
         parametrizacaoNomeFantasia: "",
         parametrizacaoRazaoSocial: "",
         parametrizacaoTelefone: "",
@@ -19,6 +20,21 @@ export default function Parametrizacao() {
         parametrizacaoLogoTipoPequena: ""
     });
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get("http://localhost:8080/parametrizacao/1");
+                if (response.status === 200) {
+                    setFormData(response.data);
+                }
+            } catch (error) {
+                console.error("Erro ao buscar os dados:", error);
+            }
+        };
+    
+        fetchData();
+    }, []);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -27,37 +43,22 @@ export default function Parametrizacao() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            console.log("Dados a serem enviados para o servidor:", formData); // Adiciona este console.log
-            const response = await axios.post("http://localhost:8080/parametrizacao/salvar", formData, {
+            console.log("Dados a serem enviados para o servidor:", formData);
+            const response = await axios.put(`http://localhost:8080/parametrizacao/1`, formData, {
                 headers: {
                     "Content-Type": "application/json"
                 }
             });
-            if (response.status === 201) { // 201 é o código para Created
-                // Limpar o formulário após o envio bem-sucedido
-                setFormData({
-                    parametrizacaoNomeFantasia: "",
-                    parametrizacaoRazaoSocial: "",
-                    parametrizacaoTelefone: "",
-                    parametrizacaoemail: "",
-                    parametrizacaoSite: "",
-                    parametrizacaoLogradouro: "",
-                    parametrizacaoBairro: "",
-                    parametrizacaoCEP: "",
-                    parametrizacaoNumero: "",
-                    parametrizacaoLogoTipoGrande: "",
-                    parametrizacaoLogoTipoPequena: ""
-                });
-                alert("Formulário enviado com sucesso!");
+            if (response.status === 200) { // 200 é o código para OK
+                alert("Formulário alterado com sucesso!");
             } else {
-                alert("Ocorreu um erro ao enviar o formulário. Por favor, tente novamente mais tarde.");
+                alert("Ocorreu um erro ao alterar o formulário. Por favor, tente novamente mais tarde.");
             }
         } catch (error) {
             console.error("Erro ao enviar o formulário:", error);
-            alert("Erro ao enviar o formulário. Por favor, tente novamente mais tarde.");
+            alert("Erro ao alterar o formulário. Por favor, tente novamente mais tarde.");
         }
     };
-
 
 
     return (
@@ -66,7 +67,7 @@ export default function Parametrizacao() {
             <form onSubmit={handleSubmit} encType="multipart/form-data">
                 <div className="page-container">
                     <div className="form_Par">
-                        <p>Parametrização de dados</p>
+                        <p>Alterar dados</p>
                         <div className="campos">
                             <div className="form_dados row">
                                 <section className="form_bloco">
@@ -126,12 +127,10 @@ export default function Parametrizacao() {
                             </div>
                             
                             <input type="submit" />
-
                         </div>
                     </div>
                 </div>
             </form>
-
             <Footer />
         </>
     );
