@@ -24,5 +24,35 @@ public class ModelProdutosService {
     {
         return prodrepo.findById(id).get();
     }
+    public List<ProdutosModel> findallbytipoProd(Long id)
+    {
+        return prodrepo.findAllByTipoProdutosId(id);
+    }
+    public boolean deleteprod(Long id)
+    {
+        try {
+            prodrepo.deleteById(id);
+            return true;
+        }
+        catch (Exception e){
+            return false;
+        }
+    }
+    public ProdutosModel addEstoque(Long id, int qtde)
+    {
+        ProdutosModel produtosModel=prodrepo.findById(id).get();
+        if(produtosModel!=null)
+            produtosModel.setEstoque(produtosModel.getEstoque() +qtde);
+        return produtosModel;
+    }
+    public ProdutosModel retiraEstoque(Long id, int qtde)
+    {
+        ProdutosModel produtosModel=prodrepo.findById(id).get();
+        if (produtosModel!=null)
+            produtosModel.setEstoque(produtosModel.getEstoque()-qtde);
+        return produtosModel;
+    }
+
+
 
 }
