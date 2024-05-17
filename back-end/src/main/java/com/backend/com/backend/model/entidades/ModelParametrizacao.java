@@ -43,4 +43,101 @@ public class ModelParametrizacao {
     @Column(name = "parametrizacaoNumero")
     private int parametrizacaoNumero;
 
+
+    public long getParametrizacaoId() {
+        return parametrizacaoId;
+    }
+
+    public String getParametrizacaoRazaoSocial() {
+        return parametrizacaoRazaoSocial;
+    }
+
+    public String getParametrizacaoNomeFantasia() {
+        return parametrizacaoNomeFantasia;
+    }
+
+    public String getParametrizacaoLogoTipoGrande() {
+        return parametrizacaoLogoTipoGrande;
+    }
+
+    public String getParametrizacaoLogoTipoPequena() {
+        return parametrizacaoLogoTipoPequena;
+    }
+
+    public String getParametrizacaoSite() {
+        return parametrizacaoSite;
+    }
+
+    public String getParametrizacaoemail() {
+        return parametrizacaoemail;
+    }
+
+    public String getParametrizacaoTelefone() {
+        return parametrizacaoTelefone;
+    }
+
+    public String getParametrizacaoCEP() {
+        return parametrizacaoCEP;
+    }
+
+    public String getParametrizacaoLogradouro() {
+        return parametrizacaoLogradouro;
+    }
+
+    public String getParametrizacaoBairro() {
+        return parametrizacaoBairro;
+    }
+
+    public int getParametrizacaoNumero() {
+        return parametrizacaoNumero;
+    }
+
+
+    public void setParametrizacaoId(long parametrizacaoId) {
+        this.parametrizacaoId = parametrizacaoId;
+    }
+
+    public void setParametrizacaoRazaoSocial(String parametrizacaoRazaoSocial) {
+        this.parametrizacaoRazaoSocial = parametrizacaoRazaoSocial;
+    }
+
+    public void setParametrizacaoNomeFantasia(String parametrizacaoNomeFantasia) {
+        this.parametrizacaoNomeFantasia = parametrizacaoNomeFantasia;
+    }
+
+    public void setParametrizacaoLogoTipoGrande(String parametrizacaoLogoTipoGrande) {
+        this.parametrizacaoLogoTipoGrande = parametrizacaoLogoTipoGrande;
+    }
+
+    public void setParametrizacaoLogoTipoPequena(String parametrizacaoLogoTipoPequena) {
+        this.parametrizacaoLogoTipoPequena = parametrizacaoLogoTipoPequena;
+    }
+
+    public void setParametrizacaoSite(String parametrizacaoSite) {
+        this.parametrizacaoSite = parametrizacaoSite;
+    }
+
+    public void setParametrizacaoemail(String parametrizacaoemail) {
+        this.parametrizacaoemail = parametrizacaoemail;
+    }
+
+    public void setParametrizacaoTelefone(String parametrizacaoTelefone) {
+        this.parametrizacaoTelefone = parametrizacaoTelefone;
+    }
+
+    public void setParametrizacaoCEP(String parametrizacaoCEP) {
+        this.parametrizacaoCEP = parametrizacaoCEP;
+    }
+
+    public void setParametrizacaoLogradouro(String parametrizacaoLogradouro) {
+        this.parametrizacaoLogradouro = parametrizacaoLogradouro;
+    }
+
+    public void setParametrizacaoBairro(String parametrizacaoBairro) {
+        this.parametrizacaoBairro = parametrizacaoBairro;
+    }
+
+    public void setParametrizacaoNumero(int parametrizacaoNumero) {
+        this.parametrizacaoNumero = parametrizacaoNumero;
+    }
 }

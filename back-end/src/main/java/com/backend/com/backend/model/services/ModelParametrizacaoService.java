@@ -15,15 +15,24 @@ public class ModelParametrizacaoService {
         this.parametrizacaoRepository = parametrizacaoRepository;
     }
 
-    public ModelParametrizacao salvar(ModelParametrizacao parametrizacao) {
-        System.out.println(parametrizacao);
-        return parametrizacaoRepository.save(parametrizacao);
-
-    }
-
     public ModelParametrizacao buscarPorId(long id) {
         return parametrizacaoRepository.findById(id).orElse(null);
     }
 
-    // Outros métodos de serviço, como atualizar, excluir, listar, etc.
+    public ModelParametrizacao salvar(ModelParametrizacao parametrizacao) {
+        return parametrizacaoRepository.save(parametrizacao);
+    }
+
+    public ModelParametrizacao buscarPorNomeCompleto(String nomeCompleto) {
+        return parametrizacaoRepository.(nomeCompleto);
+    }
+
+    public ModelParametrizacao alterar(ModelParametrizacao parametrizacao) {
+        // Valida se o registro existe antes de alterar
+        if (parametrizacaoRepository.existsById(parametrizacao.getParametrizacaoId())) {
+            return parametrizacaoRepository.save(parametrizacao);
+        } else {
+            return null; // ou lançar uma exceção apropriada
+        }
+    }
 }
