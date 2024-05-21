@@ -8,21 +8,40 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @CrossOrigin
-@RequestMapping("/Carim")
-public class Carim_Controller {
+@RequestMapping("/Produtos")
+public class Control_Produtos {
     @Autowired
     private ModelProdutosService produtosService;
-    @Autowired
-    private ModelTipoProdutosService tipoProdutosService;
+
     @PostMapping("/add-produtos")
-    public ResponseEntity<Object> SalvarProduto(@RequestBody ProdutosModel produtos)
-    {
-        if(produtosService.salvar(produtos)!=null)
-            return new ResponseEntity<>(HttpStatus.OK);
-        else
-            return ResponseEntity.badRequest().body("{\"error\": \"Erro ao tentar adicionar produto.\"}");
+    public ResponseEntity<String> criarProduto(@RequestBody Map<String, Object> requestBody) {
+        String nome = (String) requestBody.get("nome");
+        if (nome!= null &&!nome.isEmpty()) {
+            int estoque = 0;
+            Long tipoId = 0L;
+            if (requestBody.containsKey("estoque")) {
+                estoque = Integer.parseInt(requestBody.get("estoque").toString());
+            }
+            if (requestBody.containsKey("tipoId")) {
+                tipoId = Long.parseLong(requestBody.get("tipoId").toString());
+            }
+            System.out.println(tipoId);
+            try {
+                ProdutosModel produto = new ProdutosModel();
+                produto.setNome(nome);
+                produto.setEstoque(estoque);
+                produtosService.salvarProduto(produto, tipoId);
+                return ResponseEntity.ok("Produto criado com sucesso!");
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao criar o produto: " + e.getMessage());
+            }
+        } else {
+            return ResponseEntity.badRequest().body("Campo 'nome' é obrigatório.");
+        }
     }
     @GetMapping("/get-um-produto")
     public ResponseEntity<Object> getumproduto(@RequestParam("id")Long id)
@@ -64,15 +83,5 @@ public class Carim_Controller {
         else
             return new ResponseEntity<>("",HttpStatus.BAD_REQUEST);
     }
-    @PostMapping("/add-Tipoprodutos")
-    public ResponseEntity<Object> SalvarumTipoProduto(@RequestBody TipoProdutos tipoProdutos)
-    {
-        return new ResponseEntity<>(tipoProdutosService.salvar(tipoProdutos),HttpStatus.OK);
 
-    }
-    @GetMapping("/get-um-Tipoproduto")
-    public ResponseEntity<Object> getumTipoProduto(@RequestParam("id") Long id)
-    {
-        return new ResponseEntity<>(tipoProdutosService.getumTipoProduto(id),HttpStatus.OK);
-    }
 }

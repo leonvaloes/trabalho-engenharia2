@@ -38,6 +38,7 @@ export default function Header() {
                 <a href="/"><img className="headerLogo" src={headerLogo} alt="logo do Carim" /></a>
                 <div className="header-itens d-flex justify-content-around">
                     <div className="button-apoiar"><strong>Quero apoiar</strong> </div>
+                    <a href="./Produtos">produtos</a>
                     <a href="./parametrizacao">Param</a>
                     <a href="./alterar">Alte</a>
                     <a href="./login">Login</a>
@@ -49,6 +50,7 @@ export default function Header() {
                 <nav className={menuAberto ? 'menu-aberto' : 'menu-fechado'}>
                     <ul className="header-lista">
                         <li><a href="/">Home</a></li>
+                        <li><a href="./Produtos">produtos</a></li>
                         <li><a href="./parametrizacao">Param</a></li>
                         <li><a href="./alterar">Alte</a></li>
                         <li><a href="./login">Login</a></li>

@@ -1,0 +1,52 @@
+/* Produtos.css */
+
+/* Centraliza o conteúdo da página */
+.corpo_prod {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 40vh; /* Ajuste a altura conforme necessário */
+}
+
+/* Centraliza e estiliza o container do formulário */
+.body_prod {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px; /* Ajuste a largura conforme necessário */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+
+/* Estilo para os labels */
+.body_prod label {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+/* Estilo para os inputs */
+.body_prod input, .body_prod select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.body_prod button{
+    border: none;
+    border-radius: 10px;
+    background-color: #cccccc96;
+    width: 100px;
+    height: 40px;
+}
+
+/* Estilo para o container do header */
+.header_prod {
+    text-align: center;
+    margin-top: 150px;
+}

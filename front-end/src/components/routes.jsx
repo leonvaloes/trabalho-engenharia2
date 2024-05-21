@@ -5,6 +5,7 @@ import Home from "./Home";
 import Login from './login';
 import Parametrizacao from './parametrizacao';
 import Alterar from './alterar';
+import Produtos from './Produtos'
 
 function routes(){
     return(
@@ -14,6 +15,8 @@ function routes(){
                 <Route element = { <Login/> }  path="/login" />
                 <Route element = { <Parametrizacao/> }  path="/parametrizacao" />
                 <Route element = { <Alterar/> }  path="/alterar" />
+                <Route element = { <Produtos/> }  path="/produtos" />
+
             </Routes> 
         </Router>
     )
