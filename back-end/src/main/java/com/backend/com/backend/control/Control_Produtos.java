@@ -70,6 +70,14 @@ public class Carim_Controller {
         return new ResponseEntity<>(tipoProdutosService.salvar(tipoProdutos),HttpStatus.OK);
 
     }
+    @GetMapping("/get-all-Tipoproduto")
+    public ResponseEntity<Object>getallTipoProdutos()
+    {
+        if (tipoProdutosService.getallTipoProduto()!=null)
+            return new ResponseEntity<>(tipoProdutosService.getallTipoProduto(),HttpStatus.OK);
+        else
+            return ResponseEntity.badRequest().body("{\"error\": \"Erro ao tentar achar TipoProduto.\"}");
+    }
     @GetMapping("/get-um-Tipoproduto")
     public ResponseEntity<Object> getumTipoProduto(@RequestParam("id") Long id)
     {
