@@ -5,6 +5,8 @@ import com.backend.com.backend.model.repositorios.ModelTipoProdutosRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ModelTipoProdutosService {
     @Autowired
@@ -16,5 +18,8 @@ public class ModelTipoProdutosService {
 
     public TipoProdutos getumTipoProduto(Long id) {
         return tipoprorepo.findById(id).get();
+    }
+    public List<TipoProdutos> findallTipoProduto(){
+        return tipoprorepo.findAll();
     }
 }

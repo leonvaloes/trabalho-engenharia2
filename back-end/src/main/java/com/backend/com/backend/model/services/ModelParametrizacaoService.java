@@ -22,11 +22,6 @@ public class ModelParametrizacaoService {
     public ModelParametrizacao salvar(ModelParametrizacao parametrizacao) {
         return parametrizacaoRepository.save(parametrizacao);
     }
-
-    public ModelParametrizacao buscarPorNomeCompleto(String nomeCompleto) {
-        return parametrizacaoRepository.(nomeCompleto);
-    }
-
     public ModelParametrizacao alterar(ModelParametrizacao parametrizacao) {
         // Valida se o registro existe antes de alterar
         if (parametrizacaoRepository.existsById(parametrizacao.getParametrizacaoId())) {
