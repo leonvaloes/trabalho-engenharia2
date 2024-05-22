@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -20,13 +22,13 @@ public class Control_Produtos {
     @PostMapping("/add-produtos")
     public ResponseEntity<String> criarProduto(@RequestBody Map<String, Object> requestBody) {
         String nome = (String) requestBody.get("nome");
-        if (nome!= null &&!nome.isEmpty()) {
+        if (nome != null && !nome.isEmpty()) {
             int estoque = 0;
             Long tipoId = 0L;
             if (requestBody.containsKey("estoque")) {
                 estoque = Integer.parseInt(requestBody.get("estoque").toString());
             }
-            if (requestBody.containsKey("tipoId")) {
+            if (requestBody.containsKey("tipoId")) { // Verifique que está recebendo "tipoId"
                 tipoId = Long.parseLong(requestBody.get("tipoId").toString());
             }
             System.out.println(tipoId);
@@ -43,6 +45,7 @@ public class Control_Produtos {
             return ResponseEntity.badRequest().body("Campo 'nome' é obrigatório.");
         }
     }
+
     @GetMapping("/get-um-produto")
     public ResponseEntity<Object> getumproduto(@RequestParam("id")Long id)
     {
@@ -50,6 +53,24 @@ public class Control_Produtos {
             return new ResponseEntity<>(produtosService.getByid(id),HttpStatus.OK);
         else
             return  ResponseEntity.badRequest().body("{\"error\": \"Erro ao tentar achar produto.\"}");
+    }
+    @GetMapping("/get-produto-nome")
+    public ResponseEntity<Object> getProdutos(@RequestParam("nome") String nome) {
+        List<ProdutosModel> produtos = produtosService.findByNome(nome);
+        if (!produtos.isEmpty()) {
+            return ResponseEntity.ok(produtos);
+        } else {
+            return ResponseEntity.badRequest().body("{\"error\": \"Nenhum produto encontrado com o nome informado.\"}");
+        }
+    }
+    @GetMapping("/get-produto-estoque")
+    public ResponseEntity<Object> getProdutosEstoque(@RequestParam("estoque") int estoque) {
+        List<ProdutosModel> produtos = produtosService.findByEstoque(estoque);
+        if (!produtos.isEmpty()) {
+            return ResponseEntity.ok(produtos);
+        } else {
+            return ResponseEntity.badRequest().body("{\"error\": \"Nenhum produto encontrado com o nome informado.\"}");
+        }
     }
     @PostMapping("/add-estoque")
     public ResponseEntity<Object> addestoque(@RequestParam("id") Long id,@RequestParam("Qtde") int Qtde)

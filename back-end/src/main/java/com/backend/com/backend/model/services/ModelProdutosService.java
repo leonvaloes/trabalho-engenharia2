@@ -21,6 +21,7 @@ public class ModelProdutosService {
         return prodrepo.save(produto);
     }
 
+
     public ProdutosModel salvar(ProdutosModel produtos)
     {
         return prodrepo.save(produtos);
@@ -63,5 +64,11 @@ public class ModelProdutosService {
     }
 
 
+    public List<ProdutosModel> findByNome(String nome) {
+        return prodrepo.findByNome(nome);
+    }
 
+    public List<ProdutosModel> findByEstoque(int estoque) {
+        return prodrepo.findByEstoque(estoque);
+    }
 }
