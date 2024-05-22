@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
-import './parametrizacao.css';
-import Header from './header';
+import Header from "./header";
 import Footer from './footer';
+import './parametrizacao.css';
 import './Produtos.css';
 
 export default function Produtos() {
-
     const [tiposDeProduto, setTiposDeProduto] = useState([]);
     const [selectedTypeId, setSelectedTypeId] = useState("");
     const [selectedTypeName, setSelectedTypeName] = useState("");
+
+    useEffect(() => {
+        fetchTiposDeProduto();
+    }, []);
 
     const fetchTiposDeProduto = async () => {
         try {
@@ -16,32 +19,30 @@ export default function Produtos() {
             const data = await response.json();
             setTiposDeProduto(data);
 
-            // Preenche o mapa de nomes de tipos de produtos por IDs
             const namesMap = data.reduce((acc, tipo) => {
                 acc[tipo.id] = tipo.nome;
                 return acc;
             }, {});
-            setSelectedTypeId(Object.keys(namesMap)[0]); // Define o primeiro tipo como selecionado por padrão
+
+            setSelectedTypeId(Object.keys(namesMap)[0]);
             setSelectedTypeName(namesMap[Object.keys(namesMap)[0]]);
         } catch (error) {
             console.error("Erro ao buscar tipos de produtos:", error);
         }
     };
 
-    useEffect(() => {
-        fetchTiposDeProduto();
-    }, []);
-
     const getTipoNameById = (id) => {
         const tipo = tiposDeProduto.find(t => t.id === parseInt(id));
-        return tipo? tipo.nome : "";
+        return tipo ? tipo.nome : "";
     };
 
-    const saveProduct = async () => {
+    const handleSubmit = async (event) => {
+        event.preventDefault(); // Impede o comportamento padrão do formulário
+
         const productData = {
-            nome: document.getElementById('name').value,
-            estoque: document.getElementById('estoque').value,
-            tipo: selectedTypeId 
+            nome: event.target.name.value,
+            estoque: event.target.estoque.value,
+            tipoId: selectedTypeId // Ajuste para enviar diretamente o ID do tipo de produto
         };
 
         try {
@@ -59,8 +60,10 @@ export default function Produtos() {
 
             const responseData = await response.text();
             console.log(responseData);
+            alert("Produto salvo com sucesso!");
         } catch (error) {
             console.error("Erro ao salvar o produto:", error);
+            alert("Erro ao salvar o produto. Por favor, tente novamente.");
         }
     };
 
@@ -68,34 +71,33 @@ export default function Produtos() {
         <>
             <Header />
             <div className="header_prod">
-                <h1>Cadastro produtos</h1>
+                <h1>Cadastro de Produtos</h1>
             </div>
 
             <div className="corpo_prod">
                 <div className="body_prod">
-                    <label htmlFor="name">Nome produto</label>
-                    <input type="text" name="" id="name" />
+                    <form onSubmit={handleSubmit}>
+                        <label htmlFor="name">Nome do Produto:</label>
+                        <input type="text" id="name" name="name" required />
 
-                    <label htmlFor="estoque">Estoque</label>
-                    <input type="number" name="" id="estoque" />
-                    
-                    <div>
-                        <label htmlFor="type">Tipo produtos</label>
-                        <select name="tipoproduto" id="tipoprodutoSelect" onChange={(e) => {
+                        <label htmlFor="estoque">Estoque:</label>
+                        <input type="number" id="estoque" name="estoque" required />
+
+                        <label htmlFor="tipoprodutoSelect">Tipo de Produto:</label>
+                        <select name="tipoprodutoSelect" id="tipoprodutoSelect" onChange={(e) => {
                             setSelectedTypeId(e.target.value);
                             setSelectedTypeName(getTipoNameById(e.target.value));
-                        }}>
-                             <option value="">Selecione um Tipo de Produto</option>
+                        }} value={selectedTypeId}>
+                            <option value="">Selecione um tipo...</option>
                             {tiposDeProduto.map((tipo) => (
                                 <option key={tipo.id} value={tipo.id}>{tipo.nome}</option>
                             ))}
                         </select>
-                    </div>
-
-                    <button onClick={saveProduct}>Salvar</button>
-                </div> 
+                        <button type="submit">Salvar</button>
+                    </form>
+                </div>
             </div>
-            
+
             <Footer />
         </>
     );

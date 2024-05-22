@@ -20,7 +20,7 @@ public class ProdutosModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name ="Prod_nome",columnDefinition = "VARCHAR(255) COLLATE utf8mb4_unicode_ci")
-    private String Nome;
+    private String nome;
     @Column(name="Prod_estoque")
     private int estoque;
     @ManyToOne
