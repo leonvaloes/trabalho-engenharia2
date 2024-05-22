@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./register.css";
 import Header from "./header";
@@ -8,19 +9,22 @@ import logo from '../assets/favicon-carim-site.png';
 export default function Login() {
     const [userNome, setUserNome] = useState("");
     const [userSenha, setUserSenha] = useState("");
+    const navigate = useNavigate();
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post("http://localhost:8080/login/autenticar", {
+            const response = await axios.post("http://localhost:8080/login/criar-conta", {
                 userNome: userNome,
                 userSenha: userSenha
             });
             console.log(response.data);
-            alert("Login bem-sucedido!");
+            alert("Conta criada com sucesso!");
+            navigate("/parametrizacao"); // Redireciona para a tela "parametrizacao"
         } catch (error) {
-            console.error("Erro ao autenticar o usuário!", error);
-            alert("Nome de usuário ou senha incorretos. Tente novamente.");
+            console.error("Houve um erro ao criar a conta!", error);
+            alert("username já cadastrado");
         }
     };
 
@@ -54,7 +58,7 @@ export default function Login() {
                                 id="userSenha"
                             />
                         </div>
-                        <button type="submit">Login</button>
+                        <button type="submit">Cadastrar</button>
                     </div>
                 </form>
             </main>

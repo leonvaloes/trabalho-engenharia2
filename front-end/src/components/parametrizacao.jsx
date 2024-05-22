@@ -15,26 +15,34 @@ export default function Parametrizacao() {
         parametrizacaoBairro: "",
         parametrizacaoCEP: "",
         parametrizacaoNumero: "",
-        parametrizacaoLogoTipoGrande: "",
-        parametrizacaoLogoTipoPequena: ""
+        parametrizacaoLogoTipoGrande: null,
+        parametrizacaoLogoTipoPequena: null
     });
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+        const { name, value, files } = e.target;
+        if (files) {
+            setFormData({ ...formData, [name]: files[0] });
+        } else {
+            setFormData({ ...formData, [name]: value });
+        }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const data = new FormData();
+        for (const key in formData) {
+            data.append(key, formData[key]);
+        }
+
         try {
-            console.log("Dados a serem enviados para o servidor:", formData); // Adiciona este console.log
-            const response = await axios.post("http://localhost:8080/parametrizacao/salvar", formData, {
+            console.log("Dados a serem enviados para o servidor:", formData);
+            const response = await axios.post("http://localhost:8080/parametrizacao", data, {
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "multipart/form-data"
                 }
             });
-            if (response.status === 201) { // 201 é o código para Created
-                // Limpar o formulário após o envio bem-sucedido
+            if (response.status === 201) {
                 setFormData({
                     parametrizacaoNomeFantasia: "",
                     parametrizacaoRazaoSocial: "",
@@ -45,8 +53,8 @@ export default function Parametrizacao() {
                     parametrizacaoBairro: "",
                     parametrizacaoCEP: "",
                     parametrizacaoNumero: "",
-                    parametrizacaoLogoTipoGrande: "",
-                    parametrizacaoLogoTipoPequena: ""
+                    parametrizacaoLogoTipoGrande: null,
+                    parametrizacaoLogoTipoPequena: null
                 });
                 alert("Formulário enviado com sucesso!");
             } else {
@@ -57,8 +65,6 @@ export default function Parametrizacao() {
             alert("Erro ao enviar o formulário. Por favor, tente novamente mais tarde.");
         }
     };
-
-
 
     return (
         <>
@@ -110,28 +116,23 @@ export default function Parametrizacao() {
                                             <label className="form_label">Número</label>
                                         </div>
                                     </div>
+                                    <div className="form_dados col">
+                                        <div className="form_group">
+                                            <label>Logo Tipo Grande:</label>
+                                            <input type="file" name="parametrizacaoLogoTipoGrande" onChange={handleChange} />
+                                        </div>
+                                        <div className="form_group">
+                                            <label>Logo Tipo Pequena:</label>
+                                            <input type="file" name="parametrizacaoLogoTipoPequena" onChange={handleChange} />
+                                        </div>
+                                    </div>
+                                    <button type="submit">Enviar</button>
                                 </section>
                             </div>
-
-
-                            <div className="form_dados col">
-                                <div className="form_group">
-                                    <input required type="text" className="form_input col" name="parametrizacaoLogoTipoGrande" value={formData.parametrizacaoLogoTipoGrande} onChange={handleChange} />
-                                    <label className="form_label">Caminho da imagem Grande</label>
-                                </div>
-                                <div className="form_group">
-                                    <input required type="text" className="form_input col" name="parametrizacaoLogoTipoPequena" value={formData.parametrizacaoLogoTipoPequena} onChange={handleChange} />
-                                    <label className="form_label">Caminho da imagem Pequena</label>
-                                </div>
-                            </div>
-                            
-                            <input type="submit" />
-
                         </div>
                     </div>
                 </div>
             </form>
-
             <Footer />
         </>
     );

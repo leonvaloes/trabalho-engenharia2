@@ -42,6 +42,7 @@ export default function Header() {
                     <a href="./parametrizacao">Param</a>
                     <a href="./alterar">Alte</a>
                     <a href="./login">Login</a>
+                    <a href="./register">Registrar</a>
                 </div>
                 <img className="logoMenu" onClick={alterarEstadoMenu} src={logoMenu} alt="logo do Menu" />
             </div>
@@ -54,6 +55,7 @@ export default function Header() {
                         <li><a href="./parametrizacao">Param</a></li>
                         <li><a href="./alterar">Alte</a></li>
                         <li><a href="./login">Login</a></li>
+                        <li><a href="./register">Registrar</a></li>
                         <p>© 2024 <a href="#">Carim</a></p>
                     </ul>
                 </nav>
