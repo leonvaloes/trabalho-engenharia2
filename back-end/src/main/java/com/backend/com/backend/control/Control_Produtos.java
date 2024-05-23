@@ -18,7 +18,8 @@ import java.util.Map;
 public class Control_Produtos {
     @Autowired
     private ModelProdutosService produtosService;
-
+    @Autowired
+    private ModelTipoProdutosService tipoProdutosService;
     @PostMapping("/add-produtos")
     public ResponseEntity<String> criarProduto(@RequestBody Map<String, Object> requestBody) {
         String nome = (String) requestBody.get("nome");
@@ -56,7 +57,7 @@ public class Control_Produtos {
     }
     @GetMapping("/get-produto-nome")
     public ResponseEntity<Object> getProdutos(@RequestParam("nome") String nome) {
-        List<ProdutosModel> produtos = produtosService.findByNome(nome);
+        List<Map<String, Object>> produtos = produtosService.findByNome(nome);
         if (!produtos.isEmpty()) {
             return ResponseEntity.ok(produtos);
         } else {
@@ -72,21 +73,23 @@ public class Control_Produtos {
             return ResponseEntity.badRequest().body("{\"error\": \"Nenhum produto encontrado com o nome informado.\"}");
         }
     }
-    @PostMapping("/add-estoque")
-    public ResponseEntity<Object> addestoque(@RequestParam("id") Long id,@RequestParam("Qtde") int Qtde)
-    {
-        if(produtosService.addEstoque(id,Qtde)!=null)
-            return new ResponseEntity<>(HttpStatus.OK);
-        else
-            return ResponseEntity.badRequest().body("{\"error\": \"Erro ao tentar adicionar Quantidade desejada em produto.\"}");
-    }
-    @PostMapping("/Retira-estoque")
-    public ResponseEntity<Object> Retirarestoque(@RequestParam("id")Long id,@RequestParam("Qtde") int Qtde)
-    {
-        if(produtosService.retiraEstoque(id,Qtde)!=null)
-            return new ResponseEntity<>(HttpStatus.OK);
-        else
-            return ResponseEntity.badRequest().body("{\"error\": \"Erro ao tentar retirar Quantidade desejada em produto.\"}");
+    @PutMapping("/update-produto")
+    public ResponseEntity<String> atualizarProduto(@RequestBody Map<String, Object> requestBody) {
+        Long id = Long.parseLong(requestBody.get("id").toString());
+        String nome = (String) requestBody.get("nome");
+        int estoque = Integer.parseInt(requestBody.get("estoque").toString());
+        Long tipoId = Long.parseLong(requestBody.get("tipoId").toString());
+
+        try {
+            ProdutosModel produto = produtosService.getByid(id);
+            produto.setNome(nome);
+            produto.setEstoque(estoque);
+            produto.setTipoProdutos(tipoProdutosService.getumTipoProduto(tipoId));
+            produtosService.salvar(produto);
+            return ResponseEntity.ok("Produto atualizado com sucesso!");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao atualizar o produto: " + e.getMessage());
+        }
     }
     @GetMapping("/get-all-produtos-tipoprod")
     public ResponseEntity<Object> getallbyTipoProd(@RequestParam("id") Long id)
@@ -96,13 +99,13 @@ public class Control_Produtos {
         else
             return ResponseEntity.badRequest().body("{\"error\": \"Erro ao tentar achar produto.\"}");
     }
-    @GetMapping("/delete-Produto")
-    public ResponseEntity<Object> excluirProduto(@RequestParam("id") Long id)
-    {
-        if(produtosService.deleteprod(id))
-            return new ResponseEntity<>("",HttpStatus.OK);
-        else
-            return new ResponseEntity<>("",HttpStatus.BAD_REQUEST);
+    @DeleteMapping("/delete-Produto")
+    public ResponseEntity<Object> excluirProduto(@RequestParam("id") Long id) {
+        if (produtosService.deleteprod(id)) {
+            return new ResponseEntity<>("", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

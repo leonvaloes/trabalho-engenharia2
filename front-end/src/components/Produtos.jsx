@@ -37,12 +37,12 @@ export default function Produtos() {
     };
 
     const handleSubmit = async (event) => {
-        event.preventDefault(); // Impede o comportamento padrão do formulário
+        event.preventDefault();
 
         const productData = {
             nome: event.target.name.value,
             estoque: event.target.estoque.value,
-            tipoId: selectedTypeId // Ajuste para enviar diretamente o ID do tipo de produto
+            tipoId: selectedTypeId
         };
 
         try {
@@ -80,10 +80,10 @@ export default function Produtos() {
                         <label htmlFor="name">Nome do Produto:</label>
                         <input type="text" id="name" name="name" required />
 
-                        <label htmlFor="estoque">Estoque:</label>
+                        <label htmlFor="estoque"> Estoque:</label>
                         <input type="number" id="estoque" name="estoque" required />
 
-                        <label htmlFor="tipoprodutoSelect">Tipo de Produto:</label>
+                        <label htmlFor="tipoprodutoSelect"> Tipo de Produto:</label>
                         <select name="tipoprodutoSelect" id="tipoprodutoSelect" onChange={(e) => {
                             setSelectedTypeId(e.target.value);
                             setSelectedTypeName(getTipoNameById(e.target.value));
@@ -96,6 +96,10 @@ export default function Produtos() {
                         <button type="submit">Salvar</button>
                     </form>
                 </div>
+                
+                    <a href="./BuscaProdNome">Buscar Produtos por Nome</a>
+                    <a href="./BuscaProdEstoque">Buscar produtos por Estoque</a>
+                
             </div>
 
             <Footer />

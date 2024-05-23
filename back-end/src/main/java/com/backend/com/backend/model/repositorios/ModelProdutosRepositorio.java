@@ -8,7 +8,7 @@ import java.util.List;
 public interface ModelProdutosRepositorio extends JpaRepository<ProdutosModel,Long> {
 
     List<ProdutosModel> findAllByTipoProdutosId(Long id);
-    List<ProdutosModel> findByNome(String nome);
+    List<ProdutosModel> findByNomeContains(String nome);
 
     List<ProdutosModel> findByEstoque(int estoque);
 
