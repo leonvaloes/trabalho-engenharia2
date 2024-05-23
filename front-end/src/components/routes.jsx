@@ -7,6 +7,8 @@ import Register from './register';
 import Parametrizacao from './parametrizacao';
 import Alterar from './alterar';
 import Produtos from './Produtos'
+import BuscaProdNome from "./BuscaProdNome";
+import BuscaProdEstoque from "./BuscaProdEstoque";
 
 function routes(){
     return(
@@ -18,7 +20,8 @@ function routes(){
                 <Route element = { <Parametrizacao/> }  path="/parametrizacao" />
                 <Route element = { <Alterar/> }  path="/alterar" />
                 <Route element = { <Produtos/> }  path="/produtos" />
-
+                <Route element = { <BuscaProdNome/> }  path="/BuscaProdNome" />
+                <Route element = { <BuscaProdEstoque/> }  path="/BuscaProdEstoque" />
             </Routes> 
         </Router>
     )

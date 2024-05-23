@@ -6,7 +6,10 @@ import com.backend.com.backend.model.repositorios.ModelProdutosRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ModelProdutosService {
@@ -20,8 +23,6 @@ public class ModelProdutosService {
         produto.setTipoProdutos(tipoProdutos);
         return prodrepo.save(produto);
     }
-
-
     public ProdutosModel salvar(ProdutosModel produtos)
     {
         return prodrepo.save(produtos);
@@ -32,7 +33,7 @@ public class ModelProdutosService {
     }
     public ProdutosModel getByid(Long id)
     {
-        return prodrepo.findById(id).get();
+        return prodrepo.findById(id).orElse(null);
     }
     public List<ProdutosModel> findallbytipoProd(Long id)
     {
@@ -48,24 +49,21 @@ public class ModelProdutosService {
             return false;
         }
     }
-    public ProdutosModel addEstoque(Long id, int qtde)
-    {
-        ProdutosModel produtosModel=prodrepo.findById(id).get();
-        if(produtosModel!=null)
-            produtosModel.setEstoque(produtosModel.getEstoque() +qtde);
-        return produtosModel;
-    }
-    public ProdutosModel retiraEstoque(Long id, int qtde)
-    {
-        ProdutosModel produtosModel=prodrepo.findById(id).get();
-        if (produtosModel!=null)
-            produtosModel.setEstoque(produtosModel.getEstoque()-qtde);
-        return produtosModel;
-    }
 
+    public List<Map<String, Object>> findByNome(String nome) {
+            List<ProdutosModel> produtos = prodrepo.findByNomeContains(nome);
+            List<Map<String, Object>> produtosComTipo = new ArrayList<>();
 
-    public List<ProdutosModel> findByNome(String nome) {
-        return prodrepo.findByNome(nome);
+            for (ProdutosModel produto : produtos) {
+                Map<String, Object> produtoComTipo = new HashMap<>();
+                produtoComTipo.put("id", produto.getId());
+                produtoComTipo.put("nome", produto.getNome());
+                produtoComTipo.put("estoque", produto.getEstoque());
+                produtoComTipo.put("tipo", produto.getTipoProdutos().getNome());
+                produtosComTipo.add(produtoComTipo);
+            }
+
+            return produtosComTipo;
     }
 
     public List<ProdutosModel> findByEstoque(int estoque) {
