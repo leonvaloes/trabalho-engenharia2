@@ -16,10 +16,10 @@ export default function Produtos() {
     const fetchTiposDeProduto = async () => {
         try {
             const token = localStorage.getItem("token");
+            console.log("Token:", token); // Verifica se o token está sendo recuperado corretamente
             if (!token) {
                 throw new Error("Token não encontrado");
             }
-            console.log("Token:", token); // Printa o token antes de fazer a requisição
 
             const response = await fetch("http://localhost:8080/TipoProdutos/get-all-Tipoproduto", {
                 headers: {
@@ -29,7 +29,7 @@ export default function Produtos() {
             });
 
             if (!response.ok) {
-                throw new Error(`HTTP error status: ${response.status}`);
+                throw new Error(`Erro HTTP: ${response.status}`);
             }
 
             const data = await response.json();
@@ -69,7 +69,7 @@ export default function Produtos() {
             });
 
             if (!response.ok) {
-                throw new Error(`HTTP error status: ${response.status}`);
+                throw new Error(`Erro HTTP: ${response.status}`);
             }
 
             const responseData = await response.text();

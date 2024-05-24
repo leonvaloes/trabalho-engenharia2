@@ -10,6 +10,7 @@ import Produtos from './Produtos'
 import BuscaProdNome from "./BuscaProdNome";
 import BuscaProdEstoque from "./BuscaProdEstoque";
 import TipoProdutos from "./TipoProdutos";
+import AdminControlPage from "./AdminControlPage"; // Importe a página AdminControlPage
 
 function routes(){
     return(
@@ -24,6 +25,7 @@ function routes(){
                 <Route element={<BuscaProdNome />} path="/BuscaProdNome" />
                 <Route element={<BuscaProdEstoque />} path="/BuscaProdEstoque" />
                 <Route element={<TipoProdutos />} path="/TipoProdutos" />
+                <Route element={<AdminControlPage />} path="/admin" /> {/* Adicione a rota para AdminControlPage */}
             </Routes> 
         </Router>
     )

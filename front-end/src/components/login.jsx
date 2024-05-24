@@ -21,13 +21,30 @@ export default function Login() {
         password: userSenha,
       });
 
-      console.log("Usuário autenticado com sucesso!", response.data);
+      if (response.data.token) {
+        console.log("Usuário autenticado com sucesso!", response.data);
 
-      // Armazenar o token no localStorage
-      localStorage.setItem("token", response.data.token);
+        // Armazenar o token no localStorage
+        localStorage.setItem("token", response.data.token);
 
-      // Redirecionar para a rota "/produtos"
-      navigate("/produtos");
+        // Obter os papéis do usuário
+        const rolesResponse = await axios.get("http://localhost:8080/auth/roles", {
+          headers: {
+            Authorization: `Bearer ${response.data.token}`,
+          },
+        });
+
+        // Armazenar os papéis no localStorage
+        localStorage.setItem("roles", JSON.stringify(rolesResponse.data));
+
+        console.log("Token após o login:", localStorage.getItem("token"));
+        console.log("Roles após o login:", localStorage.getItem("roles"));
+
+        // Navegar para a rota '/produtos'
+        navigate("/produtos");
+      } else {
+        setError("Usuário inativo. Entre em contato com o administrador.");
+      }
     } catch (error) {
       console.error("Erro ao autenticar usuário:", error);
       setError("Erro ao autenticar usuário. Verifique os dados e tente novamente.");

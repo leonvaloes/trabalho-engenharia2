@@ -22,7 +22,12 @@ export default function Alterar() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get("http://localhost:8080/parametrizacao?id=1"); // Alteração aqui: passar o ID como um parâmetro de consulta
+                const token = localStorage.getItem("token"); // Obtenha o token do localStorage
+                const response = await axios.get("http://localhost:8080/parametrizacao?id=1", {
+                    headers: {
+                        Authorization: `Bearer ${token}` // Adicione o token ao cabeçalho da requisição
+                    }
+                });
                 if (response.status === 200) {
                     setFormData(response.data);
                 }
@@ -33,7 +38,6 @@ export default function Alterar() {
     
         fetchData();
     }, []);
-    
 
     const handleChange = (e) => {
         const { name, value, files } = e.target;
@@ -52,7 +56,12 @@ export default function Alterar() {
         }
     
         try {
-            const response = await axios.put("http://localhost:8080/parametrizacao/1", data);
+            const token = localStorage.getItem("token"); // Obtenha o token do localStorage
+            const response = await axios.put("http://localhost:8080/parametrizacao/1", data, {
+                headers: {
+                    Authorization: `Bearer ${token}` // Adicione o token ao cabeçalho da requisição
+                }
+            });
             if (response.status === 200) {
                 setFormData({
                     parametrizacaoNomeFantasia: "",
@@ -77,8 +86,6 @@ export default function Alterar() {
         }
     };
     
-
-
     return (
         <>
             <Header />
@@ -148,7 +155,7 @@ export default function Alterar() {
                     </div>
                 </div>
             </form>
-            <Footer />
+        <Footer />
         </>
     );
 }

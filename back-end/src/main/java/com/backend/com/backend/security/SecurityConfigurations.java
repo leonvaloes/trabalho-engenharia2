@@ -28,14 +28,25 @@ public class SecurityConfigurations {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         logger.info("Configuring security filter chain...");
 
-        return  httpSecurity
+        return httpSecurity
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(HttpMethod.GET, "/TipoProdutos/get-all-Tipoproduto").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/Produtos").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/TipoProdutos").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/auth/deactivate-user/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/auth/all-users").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/Produtos").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/parametrizacao").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/parametrizacao/1").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/parametrizacao").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/parametrizacao/logo-grande").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/parametrizacao/logo-pequeno").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/Produtos/get-um-produto").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/Produtos/get-produto-nome").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/TipoProdutos").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/TipoProdutos").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
@@ -49,7 +60,7 @@ public class SecurityConfigurations {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         logger.info("Creating password encoder...");
         return new BCryptPasswordEncoder();
     }

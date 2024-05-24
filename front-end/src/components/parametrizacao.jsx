@@ -30,7 +30,7 @@ export default function Parametrizacao() {
                 console.error("Erro ao buscar os dados:", error);
             }
         };
-    
+
         fetchData();
     }, []);
 
@@ -52,9 +52,11 @@ export default function Parametrizacao() {
 
         try {
             console.log("Dados a serem enviados para o servidor:", Object.fromEntries(data.entries()));
+            const token = localStorage.getItem("token");
             const response = await axios.post("http://localhost:8080/parametrizacao", data, {
                 headers: {
-                    "Content-Type": "multipart/form-data"
+                    "Content-Type": "multipart/form-data",
+                    "Authorization": `Bearer ${token}`
                 }
             });
             if (response.status === 201) {
@@ -144,7 +146,7 @@ export default function Parametrizacao() {
                                     <label className="form_label">Imagem rodapé</label>
                                 </div>
                             </div>
-                            
+
                             <input type="submit" value="Submit" />
                         </div>
                     </div>
