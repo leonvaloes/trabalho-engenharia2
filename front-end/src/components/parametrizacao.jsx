@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import './parametrizacao.css';
 import Header from './header';
@@ -19,6 +19,21 @@ export default function Parametrizacao() {
         parametrizacaoLogoTipoPequena: null
     });
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get("http://localhost:8080/parametrizacao/1");
+                if (response.status === 200) {
+                    setFormData(response.data);
+                }
+            } catch (error) {
+                console.error("Erro ao buscar os dados:", error);
+            }
+        };
+    
+        fetchData();
+    }, []);
+
     const handleChange = (e) => {
         const { name, value, files } = e.target;
         if (files) {
@@ -36,7 +51,7 @@ export default function Parametrizacao() {
         }
 
         try {
-            console.log("Dados a serem enviados para o servidor:", formData);
+            console.log("Dados a serem enviados para o servidor:", Object.fromEntries(data.entries()));
             const response = await axios.post("http://localhost:8080/parametrizacao", data, {
                 headers: {
                     "Content-Type": "multipart/form-data"
@@ -72,7 +87,7 @@ export default function Parametrizacao() {
             <form onSubmit={handleSubmit} encType="multipart/form-data">
                 <div className="page-container">
                     <div className="form_Par">
-                        <p>Parametrização de dados</p>
+                        <p>Alterar dados</p>
                         <div className="campos">
                             <div className="form_dados row">
                                 <section className="form_bloco">
@@ -116,19 +131,21 @@ export default function Parametrizacao() {
                                             <label className="form_label">Número</label>
                                         </div>
                                     </div>
-                                    <div className="form_dados col">
-                                        <div className="form_group">
-                                            <label>Logo Tipo Grande:</label>
-                                            <input type="file" name="parametrizacaoLogoTipoGrande" onChange={handleChange} />
-                                        </div>
-                                        <div className="form_group">
-                                            <label>Logo Tipo Pequena:</label>
-                                            <input type="file" name="parametrizacaoLogoTipoPequena" onChange={handleChange} />
-                                        </div>
-                                    </div>
-                                    <button type="submit">Enviar</button>
                                 </section>
                             </div>
+
+                            <div className="form_dados col">
+                                <div className="form_group">
+                                    <input required type="file" className="form_input col" name="parametrizacaoLogoTipoGrande" onChange={handleChange} />
+                                    <label className="form_label">Imagem Cabeçalho</label>
+                                </div>
+                                <div className="form_group">
+                                    <input required type="file" className="form_input col" name="parametrizacaoLogoTipoPequena" onChange={handleChange} />
+                                    <label className="form_label">Imagem rodapé</label>
+                                </div>
+                            </div>
+                            
+                            <input type="submit" value="Submit" />
                         </div>
                     </div>
                 </div>

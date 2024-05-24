@@ -1,41 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "./header.css";
-import headerLogo from "../assets/logo-carim.jpg"
-import logoMenu from "../assets/logo-menu.png"
-import { Link } from "react-router-dom";
-import Routes from './routes'
-
+import logoMenu from "../assets/logo-menu.png";
 
 export default function Header() {
-    const [menuAberto, setEstadoMenu] = useState(false);
+    const [logoUrl, setLogoUrl] = useState(null);
 
-    function alterarEstadoMenu(){
-        setEstadoMenu(!menuAberto);
-        girarImagem();
-    }
-
-    function abrirMenu() {
-        document.getElementsByClassName('.fundo-escuro').style.display = 'block';
-    }
-    function fecharMenu() {
-        document.getElementsByClassName('.fundo-escuro').style.display = 'none';
-    }
+    useEffect(() => {
+        axios.get("http://localhost:8080/parametrizacao/logo-grande?parametrizacaoId=1", { responseType: "arraybuffer" })
+            .then(response => {
+                const blob = new Blob([response.data], { type: 'image/jpeg' });
+                const imageUrl = URL.createObjectURL(blob);
+                setLogoUrl(imageUrl);
+            })
+            .catch(error => {
+                console.error("Erro ao obter a imagem do logo:", error);
+            });
+    }, []);
     
-    function girarImagem() {
-        const logoMenuElement = document.querySelector('.logoMenu');
-        if (menuAberto) {
-            logoMenuElement.style.transform = "rotate(0deg)";
-        } else {
-            logoMenuElement.style.transform = "rotate(90deg)";
-        }
-    }
-
-
-
     return (
         <header>
-            <div className="header-container ">
-                <a href="/"><img className="headerLogo" src={headerLogo} alt="logo do Carim" /></a>
+            <div className="header-container">
+                {logoUrl && (
+                    <a href="/">
+                        <img className="headerLogo" src={logoUrl} alt="logo do Carim" />
+                    </a>
+                )}
                 <div className="header-itens d-flex justify-content-around">
                     <div className="button-apoiar"><strong>Quero apoiar</strong> </div>
                     <a href="./Produtos">produtos</a>
@@ -44,23 +34,8 @@ export default function Header() {
                     <a href="./login">Login</a>
                     <a href="./register">Registrar</a>
                 </div>
-                <img className="logoMenu" onClick={alterarEstadoMenu} src={logoMenu} alt="logo do Menu" />
+                <img className="logoMenu" src={logoMenu} alt="logo do Menu" />
             </div>
-
-            <div className="header-container-menu ">
-                <nav className={menuAberto ? 'menu-aberto' : 'menu-fechado'}>
-                    <ul className="header-lista">
-                        <li><a href="/">Home</a></li>
-                        <li><a href="./Produtos">produtos</a></li>
-                        <li><a href="./parametrizacao">Param</a></li>
-                        <li><a href="./alterar">Alte</a></li>
-                        <li><a href="./login">Login</a></li>
-                        <li><a href="./register">Registrar</a></li>
-                        <p>© 2024 <a href="#">Carim</a></p>
-                    </ul>
-                </nav>
-            </div>
-            <div className={menuAberto ? 'fundo-escuro-open' : 'fundo-escuro-close'}></div>
         </header>
     );
 }
