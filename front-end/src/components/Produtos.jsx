@@ -15,17 +15,25 @@ export default function Produtos() {
 
     const fetchTiposDeProduto = async () => {
         try {
-            const response = await fetch("http://localhost:8080/TipoProdutos/get-all-Tipoproduto");
+            const token = localStorage.getItem("token");
+            if (!token) {
+                throw new Error("Token não encontrado");
+            }
+            console.log("Token:", token); // Printa o token antes de fazer a requisição
+
+            const response = await fetch("http://localhost:8080/TipoProdutos/get-all-Tipoproduto", {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error status: ${response.status}`);
+            }
+
             const data = await response.json();
             setTiposDeProduto(data);
-
-            const namesMap = data.reduce((acc, tipo) => {
-                acc[tipo.id] = tipo.nome;
-                return acc;
-            }, {});
-
-            setSelectedTypeId(Object.keys(namesMap)[0]);
-            setSelectedTypeName(namesMap[Object.keys(namesMap)[0]]);
         } catch (error) {
             console.error("Erro ao buscar tipos de produtos:", error);
         }
@@ -46,10 +54,16 @@ export default function Produtos() {
         };
 
         try {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                throw new Error("Token não encontrado");
+            }
+
             const response = await fetch("http://localhost:8080/Produtos/add-produtos", {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify(productData)
             });
@@ -97,8 +111,8 @@ export default function Produtos() {
                     </form>
                 </div>
                 
-                    <a href="./BuscaProdNome">Buscar Produtos por Nome</a>
-                    <a href="./BuscaProdEstoque">Buscar produtos por Estoque</a>
+                <a href="./BuscaProdNome">Buscar Produtos por Nome</a>
+                <a href="./BuscaProdEstoque">Buscar produtos por Estoque</a>
                 
             </div>
 

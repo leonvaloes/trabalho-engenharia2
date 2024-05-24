@@ -13,10 +13,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+@CrossOrigin(origins = "http://localhost:3000")
 
 @RestController
 @RequestMapping("auth")
@@ -48,5 +49,24 @@ public class AuthenticationControl {
         this.repository.save(newUser);
 
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/all-users")
+    public ResponseEntity getAllUsers() {
+        List<User> users = repository.findAll();
+        return ResponseEntity.ok(users);
+    }
+
+    @PutMapping("/deactivate-user/{userId}")
+    public ResponseEntity deactivateUser(@PathVariable String userId) {
+        Optional<User> optionalUser = repository.findById(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setActive(false);
+            repository.save(user);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
