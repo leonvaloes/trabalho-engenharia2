@@ -6,7 +6,6 @@ import Footer from './footer';
 
 export default function Alterar() {
     const [formData, setFormData] = useState({
-        id: 1,
         parametrizacaoNomeFantasia: "",
         parametrizacaoRazaoSocial: "",
         parametrizacaoTelefone: "",
@@ -16,14 +15,14 @@ export default function Alterar() {
         parametrizacaoBairro: "",
         parametrizacaoCEP: "",
         parametrizacaoNumero: "",
-        parametrizacaoLogoTipoGrande: "",
-        parametrizacaoLogoTipoPequena: ""
+        parametrizacaoLogoTipoGrande: null,
+        parametrizacaoLogoTipoPequena: null
     });
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get("http://localhost:8080/parametrizacao/1");
+                const response = await axios.get("http://localhost:8080/parametrizacao?id=1"); // Alteração aqui: passar o ID como um parâmetro de consulta
                 if (response.status === 200) {
                     setFormData(response.data);
                 }
@@ -34,31 +33,50 @@ export default function Alterar() {
     
         fetchData();
     }, []);
+    
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+        const { name, value, files } = e.target;
+        if (files) {
+            setFormData({ ...formData, [name]: files[0] });
+        } else {
+            setFormData({ ...formData, [name]: value });
+        }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const data = new FormData();
+        for (const key in formData) {
+            data.append(key, formData[key]);
+        }
+    
         try {
-            console.log("Dados a serem enviados para o servidor:", formData);
-            const response = await axios.put(`http://localhost:8080/parametrizacao/1`, formData, {
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            });
-            if (response.status === 200) { // 200 é o código para OK
-                alert("Formulário alterado com sucesso!");
+            const response = await axios.put("http://localhost:8080/parametrizacao/1", data);
+            if (response.status === 200) {
+                setFormData({
+                    parametrizacaoNomeFantasia: "",
+                    parametrizacaoRazaoSocial: "",
+                    parametrizacaoTelefone: "",
+                    parametrizacaoemail: "",
+                    parametrizacaoSite: "",
+                    parametrizacaoLogradouro: "",
+                    parametrizacaoBairro: "",
+                    parametrizacaoCEP: "",
+                    parametrizacaoNumero: "",
+                    parametrizacaoLogoTipoGrande: null,
+                    parametrizacaoLogoTipoPequena: null
+                });
+                alert("Formulário enviado com sucesso!");
             } else {
-                alert("Ocorreu um erro ao alterar o formulário. Por favor, tente novamente mais tarde.");
+                alert("Ocorreu um erro ao enviar o formulário. Por favor, tente novamente mais tarde.");
             }
         } catch (error) {
             console.error("Erro ao enviar o formulário:", error);
-            alert("Erro ao alterar o formulário. Por favor, tente novamente mais tarde.");
+            alert("Erro ao enviar o formulário. Por favor, tente novamente mais tarde.");
         }
     };
+    
 
 
     return (
@@ -114,19 +132,18 @@ export default function Alterar() {
                                 </section>
                             </div>
 
-
                             <div className="form_dados col">
                                 <div className="form_group">
-                                    <input required type="text" className="form_input col" name="parametrizacaoLogoTipoGrande" value={formData.parametrizacaoLogoTipoGrande} onChange={handleChange} />
-                                    <label className="form_label">Caminho da imagem Grande</label>
+                                    <input required type="file" className="form_input col" name="parametrizacaoLogoTipoGrande" onChange={handleChange} />
+                                    <label className="form_label">Imagem Cabeçalho</label>
                                 </div>
                                 <div className="form_group">
-                                    <input required type="text" className="form_input col" name="parametrizacaoLogoTipoPequena" value={formData.parametrizacaoLogoTipoPequena} onChange={handleChange} />
-                                    <label className="form_label">Caminho da imagem Pequena</label>
+                                    <input required type="file" className="form_input col" name="parametrizacaoLogoTipoPequena" onChange={handleChange} />
+                                    <label className="form_label">Imagem rodapé</label>
                                 </div>
                             </div>
                             
-                            <input type="submit" />
+                            <input type="submit" value="Submit" />
                         </div>
                     </div>
                 </div>
