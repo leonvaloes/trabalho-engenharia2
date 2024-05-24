@@ -23,11 +23,14 @@ public class ModelParametrizacao {
     @Column(name = "parametrizacaoNomeFantasia")
 
     private String parametrizacaoNomeFantasia;
-    @Column(name = "parametrizacaoLogoTipoGrande")
 
-    private String parametrizacaoLogoTipoGrande;
-    @Column(name = "parametrizacaoLogoTipoPequena")
-    private String parametrizacaoLogoTipoPequena;
+    @Column(name = "parametrizacaoLogoTipoGrande", columnDefinition = "LONGBLOB")
+    @Lob
+    private byte[] parametrizacaoLogoTipoGrande;
+
+    @Column(name = "parametrizacaoLogoTipoPequena", columnDefinition = "LONGBLOB")
+    @Lob
+    private byte[] parametrizacaoLogoTipoPequena;
     @Column(name = "parametrizacaoSite")
     private String parametrizacaoSite;
     @Column(name = "parametrizacaoemail")
@@ -56,11 +59,11 @@ public class ModelParametrizacao {
         return parametrizacaoNomeFantasia;
     }
 
-    public String getParametrizacaoLogoTipoGrande() {
+    public byte[] getParametrizacaoLogoTipoGrande() {
         return parametrizacaoLogoTipoGrande;
     }
 
-    public String getParametrizacaoLogoTipoPequena() {
+    public byte[] getParametrizacaoLogoTipoPequena() {
         return parametrizacaoLogoTipoPequena;
     }
 
@@ -92,7 +95,6 @@ public class ModelParametrizacao {
         return parametrizacaoNumero;
     }
 
-
     public void setParametrizacaoId(long parametrizacaoId) {
         this.parametrizacaoId = parametrizacaoId;
     }
@@ -105,11 +107,11 @@ public class ModelParametrizacao {
         this.parametrizacaoNomeFantasia = parametrizacaoNomeFantasia;
     }
 
-    public void setParametrizacaoLogoTipoGrande(String parametrizacaoLogoTipoGrande) {
+    public void setParametrizacaoLogoTipoGrande(byte[] parametrizacaoLogoTipoGrande) {
         this.parametrizacaoLogoTipoGrande = parametrizacaoLogoTipoGrande;
     }
 
-    public void setParametrizacaoLogoTipoPequena(String parametrizacaoLogoTipoPequena) {
+    public void setParametrizacaoLogoTipoPequena(byte[] parametrizacaoLogoTipoPequena) {
         this.parametrizacaoLogoTipoPequena = parametrizacaoLogoTipoPequena;
     }
 
