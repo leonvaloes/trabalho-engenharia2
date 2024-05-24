@@ -110,7 +110,7 @@ export default function Produtos() {
                         <button type="submit">Salvar</button>
                     </form>
                 </div>
-                
+                <a href="./TipoProdutos">Cadastrar Novo tipo de Produto</a>
                 <a href="./BuscaProdNome">Buscar Produtos por Nome</a>
                 <a href="./BuscaProdEstoque">Buscar produtos por Estoque</a>
                 
