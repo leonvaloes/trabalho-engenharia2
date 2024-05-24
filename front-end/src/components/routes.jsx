@@ -14,14 +14,14 @@ function routes(){
     return(
         <Router>
             <Routes>
-                <Route element = { <Home/> }  path="/" exact />
-                <Route element = { <Login/> }  path="/login" />
-                <Route element = { <Register/> }  path="/register" />
-                <Route element = { <Parametrizacao/> }  path="/parametrizacao" />
-                <Route element = { <Alterar/> }  path="/alterar" />
-                <Route element = { <Produtos/> }  path="/produtos" />
-                <Route element = { <BuscaProdNome/> }  path="/BuscaProdNome" />
-                <Route element = { <BuscaProdEstoque/> }  path="/BuscaProdEstoque" />
+                <Route element={<Home />} path="/" exact />
+                <Route element={<Login />} path="/login" />
+                <Route element={<Register />} path="/register" />
+                <Route element={<Parametrizacao />} path="/parametrizacao" />
+                <Route element={<Alterar />} path="/alterar" />
+                <Route element={<Produtos />} path="/produtos" />
+                <Route element={<BuscaProdNome />} path="/BuscaProdNome" />
+                <Route element={<BuscaProdEstoque />} path="/BuscaProdEstoque" />
             </Routes> 
         </Router>
     )

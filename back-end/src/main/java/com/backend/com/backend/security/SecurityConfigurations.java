@@ -1,5 +1,7 @@
 package com.backend.com.backend.security;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,11 +19,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class SecurityConfigurations {
+    private static final Logger logger = LoggerFactory.getLogger(SecurityConfigurations.class);
+
     @Autowired
     SecurityFilter securityFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        logger.info("Configuring security filter chain...");
+
         return  httpSecurity
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -29,7 +35,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/Produtos").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/TipoProdutos").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/TipoProdutos").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
@@ -38,11 +44,13 @@ public class SecurityConfigurations {
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        logger.info("Creating authentication manager...");
         return authenticationConfiguration.getAuthenticationManager();
     }
 
     @Bean
     public PasswordEncoder passwordEncoder(){
+        logger.info("Creating password encoder...");
         return new BCryptPasswordEncoder();
     }
 }

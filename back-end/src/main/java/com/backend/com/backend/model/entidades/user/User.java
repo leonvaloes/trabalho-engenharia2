@@ -25,13 +25,17 @@ public class User implements UserDetails {
     private String login;
     private String password;
     private UserRole role;
+    private boolean active;
 
     public User(String login, String password, UserRole role){
         this.login = login;
         this.password = password;
         this.role = role;
+        this.active = true;
     }
-
+    public void setActive(boolean active) {
+        this.active = active;
+    }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if(this.role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
