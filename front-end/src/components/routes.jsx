@@ -9,6 +9,7 @@ import Alterar from './alterar';
 import Produtos from './Produtos'
 import BuscaProdNome from "./BuscaProdNome";
 import BuscaProdEstoque from "./BuscaProdEstoque";
+import TipoProdutos from "./TipoProdutos";
 
 function routes(){
     return(
@@ -22,6 +23,7 @@ function routes(){
                 <Route element={<Produtos />} path="/produtos" />
                 <Route element={<BuscaProdNome />} path="/BuscaProdNome" />
                 <Route element={<BuscaProdEstoque />} path="/BuscaProdEstoque" />
+                <Route element={<TipoProdutos />} path="/TipoProdutos" />
             </Routes> 
         </Router>
     )
