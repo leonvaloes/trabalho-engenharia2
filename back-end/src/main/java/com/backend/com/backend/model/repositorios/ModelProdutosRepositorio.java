@@ -9,7 +9,6 @@ public interface ModelProdutosRepositorio extends JpaRepository<ProdutosModel,Lo
 
     List<ProdutosModel> findAllByTipoProdutosId(Long id);
     List<ProdutosModel> findByNomeContains(String nome);
-
     List<ProdutosModel> findByEstoque(int estoque);
 
 }

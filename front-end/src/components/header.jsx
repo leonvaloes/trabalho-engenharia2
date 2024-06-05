@@ -57,10 +57,12 @@ export default function Header() {
                     {isLoggedIn && <a href="./Produtos">produtos</a>}
                     {isLoggedIn && <a href="./parametrizacao">adicionar parametrizaçãoo</a>}
                     {isLoggedIn && <a href="./alterar">Alterar parametrizaçãoo</a>}
+                    {isLoggedIn && <a href="./Evento">Evento</a>}
                     {isAdmin && isLoggedIn && <a href="/admin">Admin</a>}
                     {isLoggedIn && <a href="#" onClick={handleLogout}>Logout</a>}
                     {!isLoggedIn && <a href="./login">Login</a>} {/* Renderizar o link de login apenas se não estiver logado */}
                     {!isLoggedIn && <a href="./register">Registrar</a>} {/* Renderizar o link de registro apenas se não estiver logado */}
+                    
                 </div>
                 <img className="logoMenu" src={logoMenu} alt="logo do Menu" />
             </div>
