@@ -11,6 +11,10 @@ import BuscaProdNome from "./BuscaProdNome";
 import BuscaProdEstoque from "./BuscaProdEstoque";
 import TipoProdutos from "./TipoProdutos";
 import AdminControlPage from "./AdminControlPage"; // Importe a página AdminControlPage
+import Eventos from "./Evento";
+import TipoEventos from "./TipoEvento";
+import BuscaEventosNome from "./BuscaEventoNome";
+import BuscaEventosTipo from "./BuscaEventoTipo";
 
 function routes(){
     return(
@@ -26,6 +30,10 @@ function routes(){
                 <Route element={<BuscaProdEstoque />} path="/BuscaProdEstoque" />
                 <Route element={<TipoProdutos />} path="/TipoProdutos" />
                 <Route element={<AdminControlPage />} path="/admin" /> {/* Adicione a rota para AdminControlPage */}
+                <Route element={<Eventos />} path="/Evento" />
+                <Route element={<TipoEventos />} path="/TipoEventos" />
+                <Route element={<BuscaEventosNome />} path="/BuscaEventoNome" />
+                <Route element={<BuscaEventosTipo />} path="/BuscaEventoTipo" />
             </Routes> 
         </Router>
     )

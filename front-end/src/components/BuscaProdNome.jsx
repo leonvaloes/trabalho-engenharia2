@@ -4,6 +4,7 @@ import Footer from './footer';
 import './parametrizacao.css';
 import './BuscaProdNome'
 import './Produtos.css';
+import './BuscaProdNome.css'
 
 export default function BuscaProdutosNome() {
     const [nomeProduto, setNomeProduto] = useState('');
@@ -70,6 +71,10 @@ export default function BuscaProdutosNome() {
 
     // Função para excluir um produto
     const handleDelete = async (prod) => {
+        const confirmation = window.confirm("Tem certeza que deseja deletar este evento?");
+        if (!confirmation) {
+            return null;
+        }
         try {
             const response = await fetch(`http://localhost:8080/Produtos/delete-Produto?id=${prod.id}`, { method: 'DELETE' });
             if (response.ok) {
@@ -179,8 +184,6 @@ export default function BuscaProdutosNome() {
 </div>
 </div>
 
-php
-Copiar código
             {editMode && selectedProduto && (
                 <div className="edit-form mt-4">
                     <h2>Editar Produto</h2>

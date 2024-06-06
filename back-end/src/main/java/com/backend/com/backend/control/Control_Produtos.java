@@ -33,7 +33,12 @@ public class Control_Produtos {
             int estoque = 0;
             Long tipoId = 0L;
             if (requestBody.containsKey("estoque")) {
-                estoque = Integer.parseInt(requestBody.get("estoque").toString());
+                if(Integer.parseInt(requestBody.get("estoque").toString())>0)
+                     estoque = Integer.parseInt(requestBody.get("estoque").toString());
+                else {
+                    logger.warn("Estoque Nao pode ser negativo");
+                    return ResponseEntity.badRequest().body("Estoque Nao pode ser negativo");
+                }
             }
             if (requestBody.containsKey("tipoId")) {
                 tipoId = Long.parseLong(requestBody.get("tipoId").toString());

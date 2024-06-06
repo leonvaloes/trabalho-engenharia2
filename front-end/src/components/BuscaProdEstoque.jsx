@@ -2,58 +2,77 @@ import React, { useState, useEffect } from 'react';
 import Header from './header';
 import Footer from './footer';
 import './parametrizacao.css';
-import './BuscaProdEstoque.css'
 import './Produtos.css';
 
-export default function BuscaProdEstoque() {
-    const [nomeProduto, setNomeProduto] = useState('');
+export default function BuscaProdutosEstoque() {
     const [produtos, setProdutos] = useState([]);
     const [tiposDeProduto, setTiposDeProduto] = useState([]);
     const [selectedProduto, setSelectedProduto] = useState(null);
     const [editMode, setEditMode] = useState(false);
+    const [error, setError] = useState('');
 
     useEffect(() => {
         fetchTiposDeProduto();
     }, []);
 
+    // Função para buscar tipos de produto
     const fetchTiposDeProduto = async () => {
         try {
-            const response = await fetch('http://localhost:8080/TipoProdutos/get-all-Tipoproduto');
+            const token = localStorage.getItem('token');
+            const response = await fetch('http://localhost:8080/TipoProdutos/get-all-Tipoproduto', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            if (!response.ok) {
+                throw new Error('Falha ao buscar tipos de produtos');
+            }
             const data = await response.json();
             setTiposDeProduto(data);
         } catch (error) {
             console.error('Erro ao buscar tipos de produtos:', error);
+            setError('Erro ao buscar tipos de produtos. Tente novamente mais tarde.');
         }
     };
 
+    // Função para lidar com a submissão do formulário de busca de produtos por estoque
     const handleSubmit = async (event) => {
         event.preventDefault();
         const formData = new FormData(event.target);
-        const estoque= formData.get('estoque');
+        const estoque = formData.get('estoque');
 
         try {
             const response = await fetch(`http://localhost:8080/Produtos/get-produto-estoque?estoque=${estoque}`);
-            if (response.ok) 
-                {
-                    const data = await response.json();
-                    setProdutos(data);
-                } 
-                else 
-                {
-                    setProdutos([]);
-                    console.error('Erro ao buscar produtos por nome:', response.statusText);
-                }
+            if (response.ok) {
+                const data = await response.json();
+                const produtosComTipos = data.map(produto => ({
+                    ...produto,
+                    tipo: tiposDeProduto.find(tipo => tipo.id === produto.tipoId)?.nome || 'Tipo não encontrado'
+                }));
+                setProdutos(produtosComTipos);
+            } else {
+                setProdutos([]);
+                console.error('Erro ao buscar produtos por estoque:', response.statusText);
+                setError('Erro ao buscar produtos por estoque. Tente novamente mais tarde.');
+            }
         } catch (error) {
             console.error('Erro ao buscar produtos por estoque:', error);
+            setError('Erro ao buscar produtos por estoque. Tente novamente mais tarde.');
         }
     };
 
+    // Função para editar um produto
     const handleEdit = (produto) => {
         setSelectedProduto(produto);
         setEditMode(true);
     };
 
+    // Função para excluir um produto
     const handleDelete = async (prod) => {
+        const confirmation = window.confirm("Tem certeza que deseja deletar este produto?");
+        if (!confirmation) {
+            return;
+        }
         try {
             const response = await fetch(`http://localhost:8080/Produtos/delete-Produto?id=${prod.id}`, { method: 'DELETE' });
             if (response.ok) {
@@ -61,18 +80,21 @@ export default function BuscaProdEstoque() {
             } else {
                 const error = await response.text();
                 console.error('Erro ao excluir produto:', error);
+                setError('Erro ao excluir produto. Tente novamente mais tarde.');
             }
         } catch (error) {
             console.error('Erro ao excluir produto:', error);
+            setError('Erro ao excluir produto. Tente novamente mais tarde.');
         }
     };
 
+    // Função para atualizar um produto
     const handleUpdate = async (event) => {
         event.preventDefault();
         const formData = new FormData(event.target);
         const updatedProduto = {
             id: selectedProduto.id,
-            nome: formData.get('name'),
+            nome: selectedProduto.nome,
             estoque: formData.get('estoque'),
             tipoId: formData.get('tipoId')
         };
@@ -81,7 +103,8 @@ export default function BuscaProdEstoque() {
             const response = await fetch('http://localhost:8080/Produtos/update-produto', {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
                 },
                 body: JSON.stringify(updatedProduto)
             });
@@ -96,9 +119,11 @@ export default function BuscaProdEstoque() {
             } else {
                 const error = await response.text();
                 console.error('Erro ao atualizar produto:', error);
+                setError('Erro ao atualizar produto. Tente novamente mais tarde.');
             }
         } catch (error) {
             console.error('Erro ao atualizar produto:', error);
+            setError('Erro ao atualizar produto. Tente novamente mais tarde.');
         }
     };
 
@@ -106,14 +131,14 @@ export default function BuscaProdEstoque() {
         <>
             <Header />
             <div className="header_prod">
-                <h1>Busca de Produtos por Nome</h1>
+                <h1>Busca de Produtos por Estoque</h1>
             </div>
 
             <div className="container my-4">
                 <div className="body_prod">
                     <form onSubmit={handleSubmit}>
                         <div className="form-group">
-                            <label htmlFor="estoque">Nome do Produto:</label>
+                            <label htmlFor="estoque">Estoque do Produto:</label>
                             <input type="number" className="form-control" id="estoque" name="estoque" required />
                         </div>
                         <button type="submit" className="btn btn-primary">Buscar</button>
@@ -122,6 +147,7 @@ export default function BuscaProdEstoque() {
 
                 <div className="resultado mt-4">
                     <h2>Resultados da Busca</h2>
+                    {error && <div className="alert alert-danger" role="alert">{error}</div>}
                     <div className="table-responsive">
                         <table className="table table-hover">
                             <thead>
@@ -139,7 +165,7 @@ export default function BuscaProdEstoque() {
                                         <th scope="row">{index + 1}</th>
                                         <td>{produto.nome}</td>
                                         <td>{produto.estoque}</td>
-                                        <td>{produto.tipo}</td>
+                                        <td>{produto.tipoProdutos.nome}</td>
                                         <td>
                                             <button className="btn btn-secondary mr-2" onClick={() => handleEdit(produto)}>Editar</button>
                                             <button className="btn btn-danger" onClick={() => handleDelete(produto)}>Excluir</button>
@@ -162,7 +188,7 @@ export default function BuscaProdEstoque() {
                         <form onSubmit={handleUpdate}>
                             <div className="form-group">
                                 <label htmlFor="editName">Nome do Produto:</label>
-                                <input type="text" className="form-control" id="editName" name="name" defaultValue={selectedProduto.nome} required />
+                                <input type="text" className="form-control" id="editName" name="name" defaultValue={selectedProduto.nome} readOnly />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="editEstoque">Estoque:</label>
