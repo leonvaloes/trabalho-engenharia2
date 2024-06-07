@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+import $ from 'jquery';
+import 'jquery-mask-plugin';
 import Header from "./header";
-import Footer from './footer';
-import './CriarRifa.css';
+import Footer from "./footer";
+import "./CriarRifa.css";
 
 export default function CriarRifa() {
     const [formData, setFormData] = useState({
@@ -67,6 +69,14 @@ export default function CriarRifa() {
         }
     };
 
+
+    useEffect(() => {
+        $("#valor").mask("000.000.000,00", { reverse: true }); 
+        $("#dataSorteio").mask("00/00/0000"); 
+        $("#quantidadeTickets").mask("000"); 
+    }, []);
+    
+
     return (
         <>
             <Header />
@@ -87,7 +97,7 @@ export default function CriarRifa() {
                     </div>
                     <div className="form-group">
                         <label htmlFor="valor">Valor</label>
-                        <input type="number" id="valor" name="valor" value={formData.valor} onChange={handleChange} required />
+                        <input type="text" id="valor" name="valor" value={formData.valor} onChange={handleChange} required />
                     </div>
                     <div className="form-group">
                         <label htmlFor="dataSorteio">Data do Sorteio</label>
