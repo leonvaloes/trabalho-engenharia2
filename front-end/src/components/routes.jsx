@@ -10,11 +10,16 @@ import Produtos from './Produtos'
 import BuscaProdNome from "./BuscaProdNome";
 import BuscaProdEstoque from "./BuscaProdEstoque";
 import TipoProdutos from "./TipoProdutos";
-import AdminControlPage from "./AdminControlPage"; // Importe a página AdminControlPage
-import Eventos from "./Evento";
+import AdminControlPage from "./AdminControlPage";
 import TipoEventos from "./TipoEvento";
 import BuscaEventosNome from "./BuscaEventoNome";
 import BuscaEventosTipo from "./BuscaEventoTipo";
+import Eventos from "./Evento";
+import AgendarDoacao from './AgendarDoacao';
+import BuscaDoacao from './BuscaDoacao';
+import CriarRifa from './CriarRifa';
+import BuscaRifa from './BuscaRifa';
+import PesquisaRifa from './PesquisaRifa';
 
 function routes(){
     return(
@@ -29,11 +34,13 @@ function routes(){
                 <Route element={<BuscaProdNome />} path="/BuscaProdNome" />
                 <Route element={<BuscaProdEstoque />} path="/BuscaProdEstoque" />
                 <Route element={<TipoProdutos />} path="/TipoProdutos" />
-                <Route element={<AdminControlPage />} path="/admin" /> {/* Adicione a rota para AdminControlPage */}
-                <Route element={<Eventos />} path="/Evento" />
-                <Route element={<TipoEventos />} path="/TipoEventos" />
-                <Route element={<BuscaEventosNome />} path="/BuscaEventoNome" />
-                <Route element={<BuscaEventosTipo />} path="/BuscaEventoTipo" />
+                <Route element={<AgendarDoacao />} path="/AgendarDoacao" />
+                <Route element={<BuscaDoacao />} path="/BuscaDoacao" />
+                <Route element={<CriarRifa />} path="/CriarRifa" />
+                <Route element={<BuscaRifa />} path="/BuscaRifa" />
+                <Route element={<PesquisaRifa />} path="/PesquisaRifa" />
+
+                <Route element={<AdminControlPage />} path="/admin" />
             </Routes> 
         </Router>
     )

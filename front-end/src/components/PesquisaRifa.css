@@ -1,0 +1,74 @@
+/* Estilo para a área de pesquisa */
+.search-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .search-container h2 {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .search-form {
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  .search-button {
+    padding: 10px 20px;
+    margin-left: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  /* Estilo para a lista de rifas */
+  .rifas-list {
+    margin-top: 40px;
+  }
+  
+  .rifa-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .rifa-item:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .rifa-item h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  
+  .rifa-item p {
+    margin: 0;
+    color: #666;
+  }
+  
+  /* Estilo para mensagens de erro */
+  .error-message {
+    color: red;
+    margin-top: 10px;
+    text-align: center;
+  }
+  

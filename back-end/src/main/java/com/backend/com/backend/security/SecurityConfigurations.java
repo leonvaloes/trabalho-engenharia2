@@ -57,6 +57,14 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.GET, "/Eventos/get-um-evento").permitAll()
                         .requestMatchers(HttpMethod.GET, "/Eventos/get-evento-nome").permitAll()
                         .requestMatchers(HttpMethod.GET, "/Eventos/get-all-eventos-tipoevento").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/Doacao").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/Doacao/all").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/Doacao/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/Rifa/all").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/Rifa").permitAll()
+
+
+
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
