@@ -48,6 +48,14 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.GET, "/Produtos/get-produto-nome").permitAll()
                         .requestMatchers(HttpMethod.GET, "/TipoProdutos").permitAll()
                         .requestMatchers(HttpMethod.POST, "/TipoProdutos").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/Doacao").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/Doacao/all").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/Doacao/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/Rifa/all").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/Rifa").permitAll()
+
+
+
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

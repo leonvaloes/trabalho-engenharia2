@@ -10,7 +10,12 @@ import Produtos from './Produtos'
 import BuscaProdNome from "./BuscaProdNome";
 import BuscaProdEstoque from "./BuscaProdEstoque";
 import TipoProdutos from "./TipoProdutos";
-import AdminControlPage from "./AdminControlPage"; // Importe a página AdminControlPage
+import AdminControlPage from "./AdminControlPage";
+import AgendarDoacao from './AgendarDoacao';
+import BuscaDoacao from './BuscaDoacao';
+import CriarRifa from './CriarRifa';
+import BuscaRifa from './BuscaRifa';
+import PesquisaRifa from './PesquisaRifa';
 
 function routes(){
     return(
@@ -25,7 +30,13 @@ function routes(){
                 <Route element={<BuscaProdNome />} path="/BuscaProdNome" />
                 <Route element={<BuscaProdEstoque />} path="/BuscaProdEstoque" />
                 <Route element={<TipoProdutos />} path="/TipoProdutos" />
-                <Route element={<AdminControlPage />} path="/admin" /> {/* Adicione a rota para AdminControlPage */}
+                <Route element={<AgendarDoacao />} path="/AgendarDoacao" />
+                <Route element={<BuscaDoacao />} path="/BuscaDoacao" />
+                <Route element={<CriarRifa />} path="/CriarRifa" />
+                <Route element={<BuscaRifa />} path="/BuscaRifa" />
+                <Route element={<PesquisaRifa />} path="/PesquisaRifa" />
+
+                <Route element={<AdminControlPage />} path="/admin" />
             </Routes> 
         </Router>
     )

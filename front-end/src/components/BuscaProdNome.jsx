@@ -45,13 +45,11 @@ export default function BuscaProdutosNome() {
 
         try {
             const response = await fetch(`http://localhost:8080/Produtos/get-produto-nome?nome=${nome}`);
-            if (response.ok) 
-            {
+            if (response.ok) {
                 const data = await response.json();
                 setProdutos(data);
-            } 
-            else 
-            {
+            }
+            else {
                 setProdutos([]);
                 console.error('Erro ao buscar produtos por nome:', response.statusText);
                 setError('Erro ao buscar produtos por nome. Tente novamente mais tarde.');
@@ -166,49 +164,49 @@ export default function BuscaProdutosNome() {
                                         <td>
                                             <button className="btn btn-secondary mr-2" onClick={() => handleEdit(produto)}>Editar</button>
                                             <button className="btn btndanger" onClick={() => handleDelete(produto)}>Excluir</button>
-</td>
-</tr>
-))}
-{produtos.length === 0 && (
-<tr>
-<td colSpan="5" className="text-center">Nenhum produto encontrado.</td>
-</tr>
-)}
-</tbody>
-</table>
-</div>
-</div>
-
-php
-Copiar código
-            {editMode && selectedProduto && (
-                <div className="edit-form mt-4">
-                    <h2>Editar Produto</h2>
-                    <form onSubmit={handleUpdate}>
-                        <div className="form-group">
-                            <label htmlFor="editName">Nome do Produto:</label>
-                            <input type="text" className="form-control" id="editName" name="name" defaultValue={selectedProduto.nome} required />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="editEstoque">Estoque:</label>
-                            <input type="number" className="form-control" id="editEstoque" name="estoque" defaultValue={selectedProduto.estoque} required />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="editTipoId">Tipo de Produto:</label>
-                            <select className="form-control" id="editTipoId" name="tipoId" defaultValue={selectedProduto.tipoId} required>
-                                {tiposDeProduto.map(tipo => (
-                                    <option key={tipo.id} value={tipo.id}>{tipo.nome}</option>
+                                        </td>
+                                    </tr>
                                 ))}
-                            </select>
-                        </div>
-                        <button type="submit" className="btn btn-primary">Atualizar</button>
-                        <button type="button" className="btn btn-secondary ml-2" onClick={() => setEditMode(false)}>Cancelar</button>
-                    </form>
+                                {produtos.length === 0 && (
+                                    <tr>
+                                        <td colSpan="5" className="text-center">Nenhum produto encontrado.</td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            )}
-        </div>
 
-        <Footer />
-    </>
-);
+                php
+                Copiar código
+                {editMode && selectedProduto && (
+                    <div className="edit-form mt-4">
+                        <h2>Editar Produto</h2>
+                        <form onSubmit={handleUpdate}>
+                            <div className="form-group">
+                                <label htmlFor="editName">Nome do Produto:</label>
+                                <input type="text" className="form-control" id="editName" name="name" defaultValue={selectedProduto.nome} required />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="editEstoque">Estoque:</label>
+                                <input type="number" className="form-control" id="editEstoque" name="estoque" defaultValue={selectedProduto.estoque} required />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="editTipoId">Tipo de Produto:</label>
+                                <select className="form-control" id="editTipoId" name="tipoId" defaultValue={selectedProduto.tipoId} required>
+                                    {tiposDeProduto.map(tipo => (
+                                        <option key={tipo.id} value={tipo.id}>{tipo.nome}</option>
+                                    ))}
+                                </select>
+                            </div>
+                            <button type="submit" className="btn btn-primary">Atualizar</button>
+                            <button type="button" className="btn btn-secondary ml-2" onClick={() => setEditMode(false)}>Cancelar</button>
+                        </form>
+                    </div>
+                )}
+            </div>
+
+            <Footer />
+        </>
+    );
 }

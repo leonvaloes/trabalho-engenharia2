@@ -89,7 +89,7 @@ export default function Parametrizacao() {
             <form onSubmit={handleSubmit} encType="multipart/form-data">
                 <div className="page-container">
                     <div className="form_Par">
-                        <p>Alterar dados</p>
+                        <p>Parametrização</p>
                         <div className="campos">
                             <div className="form_dados row">
                                 <section className="form_bloco">
