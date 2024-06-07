@@ -13,6 +13,8 @@ public class RifaController {
 
     @Autowired
     private ModelRifaService modelRifaService;
+    private ModelRifaService rifaService;
+
 
     @PostMapping
     public ModelRifa createRifa(@RequestBody ModelRifa rifa) {
@@ -24,6 +26,9 @@ public class RifaController {
         return modelRifaService.getAllRifas();
     }
 
-
+    @RequestMapping("/api/rifas")
+    public List<ModelRifa> getAlllRifas() {
+        return rifaService.getAllRifas();
+    }
 
 }

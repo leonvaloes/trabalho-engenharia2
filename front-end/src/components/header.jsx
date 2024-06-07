@@ -55,6 +55,7 @@ export default function Header() {
                         </div>
                     )}
                     {isLoggedIn && <a href="./Produtos">produtos</a>}
+                    {isLoggedIn && <a href="/">Comprar Rifa</a>}
                     {isLoggedIn && <a href="./Evento">Evento</a>}
                     {isLoggedIn && <a href="./parametrizacao">adicionar parametrização</a>}
                     {isLoggedIn && <a href="./alterar">Alterar parametrização</a>}

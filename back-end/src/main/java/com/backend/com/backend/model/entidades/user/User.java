@@ -1,3 +1,4 @@
+// User.java
 package com.backend.com.backend.model.entidades.user;
 
 import jakarta.persistence.*;

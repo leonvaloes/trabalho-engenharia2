@@ -1,3 +1,5 @@
+
+// ModelRifa.java
 package com.backend.com.backend.model.entidades;
 
 import jakarta.persistence.*;
@@ -39,3 +41,4 @@ public class ModelRifa {
     @Column(name="quantidade_tickets")
     private int quantidadeTickets;
 }
+

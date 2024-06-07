@@ -14,6 +14,7 @@ import AdminControlPage from "./AdminControlPage";
 import TipoEventos from "./TipoEvento";
 import BuscaEventosNome from "./BuscaEventoNome";
 import BuscaEventosTipo from "./BuscaEventoTipo";
+import VendaRifa from "./vendaRifa";
 import Eventos from "./Evento";
 import AgendarDoacao from './AgendarDoacao';
 import BuscaDoacao from './BuscaDoacao';
@@ -41,6 +42,8 @@ function routes(){
                 <Route element={<PesquisaRifa />} path="/PesquisaRifa" />
 
                 <Route element={<AdminControlPage />} path="/admin" />
+
+                <Route element={<VendaRifa />} path="/vendaRifa" />
             </Routes> 
         </Router>
     )

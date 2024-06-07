@@ -20,4 +20,5 @@ public class ModelRifaService {
     public List<ModelRifa> getAllRifas() {
         return modelRifaRepository.findAll();
     }
+    
 }
